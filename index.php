@@ -9,11 +9,204 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
   </head>
   <body>
+    <?php
+
+    $dsn = 'mysql:host=localhost;dbname=sugoroku;charset=utf8';
+    $user = 'sugoroku_user';
+    $pass = 'maru2020';
+
+    try{
+      //DBへ接続
+      $dbh = new PDO($dsn,$user,$pass,[
+          PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+      ]);
+
+      $sql1 = "SELECT position FROM current_position WHERE player = 1";
+      $res = $dbh->query($sql1);
+      foreach($res as $row){
+        $cp1 = $row['position'];
+      }
+      $sqlcn1 = "SELECT countNumber FROM current_position WHERE player = 1";
+      $res = $dbh->query($sqlcn1);
+      foreach($res as $row){
+        $cn1 = $row['countNumber'];
+      }
+      $sql2 = "SELECT position FROM current_position WHERE player = 2";
+      $res = $dbh->query($sql2);
+      foreach($res as $row){
+        $cp2 = $row['position'];
+      }
+      $sqlcn2 = "SELECT countNumber FROM current_position WHERE player = 2";
+      $res = $dbh->query($sqlcn2);
+      foreach($res as $row){
+        $cn2 = $row['countNumber'];
+      }
+      $sql3 = "SELECT position FROM current_position WHERE player = 3";
+      $res = $dbh->query($sql3);
+      foreach($res as $row){
+        $cp3 = $row['position'];
+      }
+      $sqlcn3 = "SELECT countNumber FROM current_position WHERE player = 3";
+      $res = $dbh->query($sqlcn3);
+      foreach($res as $row){
+        $cn3 = $row['countNumber'];
+      }
+      $sql4 = "SELECT position FROM current_position WHERE player = 4";
+      $res = $dbh->query($sql4);
+      foreach($res as $row){
+        $cp4 = $row['position'];
+      }
+      $sqlcn4 = "SELECT countNumber FROM current_position WHERE player = 4";
+      $res = $dbh->query($sqlcn4);
+      foreach($res as $row){
+        $cn4 = $row['countNumber'];
+      }
+      $sqlpn = "SELECT playerNumber FROM current_position WHERE player = 1";
+      $res = $dbh->query($sqlpn);
+      foreach($res as $row){
+        $pn = $row['playerNumber'];
+      }
+      $sqltcn = "SELECT totalCountNumber FROM current_position WHERE player = 1";
+      $res = $dbh->query($sqltcn);
+      foreach($res as $row){
+        $tcn = $row['totalCountNumber'];
+      }
+    } catch(PDOException $e){
+        echo '接続失敗'.$e->getMessage();
+    };
+    //接続を閉じる
+    $dbh=null;
+
+    ?>
+     <script type="text/javascript">
+     let cp1 = <?php echo $cp1; ?>;
+     let countNum1 = <?php echo $cn1; ?>;
+     let cp2 = <?php echo $cp2; ?>;
+     let countNum2 = <?php echo $cn2; ?>;
+     let cp3 = <?php echo $cp3; ?>;
+     let countNum3 = <?php echo $cn3; ?>;
+     let cp4 = <?php echo $cp4; ?>;
+     let countNum4 = <?php echo $cn4; ?>;
+     let pn = <?php echo $pn; ?>;
+     player = pn;
+     let tcn = <?php echo $tcn; ?>;
+
+
+     $(function(){
+
+       $(`#continued`).click(function(){
+         $('.select1').addClass('none');
+         $('.game').removeClass('none');
+         switch(pn){
+           case 1:
+           $(`#count`).text(`${countNum1}投目`);
+           leftVal1 = 100 - cp1;
+           diceSum1 = cp1;
+           diceSumId1 = ("square" + diceSum1);
+           document.getElementById(diceSumId1).insertAdjacentHTML('afterbegin', '<i id="currentPosition1" class="fas fa-car-side playerIcon1"></i>');
+           let element = document.getElementById('currentPosition1');
+           element.scrollIntoView({behavior: 'smooth',inline: 'center'});
+           break;
+
+           case 2:
+           $(`#count`).text(`${countNum1}投目`);
+           leftVal1 = 100 - cp1;
+           diceSum1 = cp1;
+           diceSumId1 = ("square" + diceSum1);
+           document.getElementById(diceSumId1).insertAdjacentHTML('afterbegin', '<i id="currentPosition1" class="fas fa-car-side playerIcon1"></i>');
+           $(`#count`).text(`${countNum2}投目`);
+           leftVal2 = 100 - cp2;
+           diceSum2 = cp2;
+           diceSumId2 = ("square" + diceSum2);
+           document.getElementById(diceSumId2).insertAdjacentHTML('afterbegin', '<i id="currentPosition2" class="fas fa-car-side playerIcon2"></i>');
+           if(tcn % 2 === 0){
+             let element = document.getElementById('currentPosition1');
+             element.scrollIntoView({behavior: 'smooth',inline: 'center'});
+           }else{
+             let element = document.getElementById('currentPosition2');
+             element.scrollIntoView({behavior: 'smooth',inline: 'center'});
+
+           }
+           break;
+
+           case 3:
+           $(`#count`).text(`${countNum1}投目`);
+           leftVal1 = 100 - cp1;
+           diceSum1 = cp1;
+           diceSumId1 = ("square" + diceSum1);
+           document.getElementById(diceSumId1).insertAdjacentHTML('afterbegin', '<i id="currentPosition1" class="fas fa-car-side playerIcon1"></i>');
+           $(`#count`).text(`${countNum2}投目`);
+           leftVal2 = 100 - cp2;
+           diceSum2 = cp2;
+           diceSumId2 = ("square" + diceSum2);
+           document.getElementById(diceSumId2).insertAdjacentHTML('afterbegin', '<i id="currentPosition2" class="fas fa-car-side playerIcon2"></i>');
+           $(`#count`).text(`${countNum3}投目`);
+           leftVal3 = 100 - cp3;
+           diceSum3 = cp3;
+           diceSumId3 = ("square" + diceSum3);
+           document.getElementById(diceSumId3).insertAdjacentHTML('afterbegin', '<i id="currentPosition3" class="fas fa-car-side playerIcon3"></i>');
+           if(tcn % 3 === 0){
+             let element = document.getElementById('currentPosition1');
+             element.scrollIntoView({behavior: 'smooth',inline: 'center'});
+           }else if(tcn % 3 === 1){
+             let element = document.getElementById('currentPosition2');
+             element.scrollIntoView({behavior: 'smooth',inline: 'center'});
+           }else{
+             let element = document.getElementById('currentPosition3');
+             element.scrollIntoView({behavior: 'smooth',inline: 'center'});
+           }
+           break;
+
+           case 4:
+           $(`#count`).text(`${countNum1}投目`);
+           leftVal1 = 100 - cp1;
+           diceSum1 = cp1;
+           diceSumId1 = ("square" + diceSum1);
+           document.getElementById(diceSumId1).insertAdjacentHTML('afterbegin', '<i id="currentPosition1" class="fas fa-car-side playerIcon1"></i>');
+           $(`#count`).text(`${countNum2}投目`);
+           leftVal2 = 100 - cp2;
+           diceSum2 = cp2;
+           diceSumId2 = ("square" + diceSum2);
+           document.getElementById(diceSumId2).insertAdjacentHTML('afterbegin', '<i id="currentPosition2" class="fas fa-car-side playerIcon2"></i>');
+           $(`#count`).text(`${countNum3}投目`);
+           leftVal3 = 100 - cp3;
+           diceSum3 = cp3;
+           diceSumId3 = ("square" + diceSum3);
+           document.getElementById(diceSumId3).insertAdjacentHTML('afterbegin', '<i id="currentPosition3" class="fas fa-car-side playerIcon3"></i>');
+           $(`#count`).text(`${countNum4}投目`);
+           leftVal4 = 100 - cp4;
+           diceSum4 = cp4;
+           diceSumId4 = ("square" + diceSum4);
+           document.getElementById(diceSumId4).insertAdjacentHTML('afterbegin', '<i id="currentPosition4" class="fas fa-car-side playerIcon4"></i>');
+           if(tcn % 4 === 0){
+             let element = document.getElementById('currentPosition1');
+             element.scrollIntoView({behavior: 'smooth',inline: 'center'});
+           }else if(tcn % 4 === 1){
+             let element = document.getElementById('currentPosition2');
+             element.scrollIntoView({behavior: 'smooth',inline: 'center'});
+           }else if(tcn % 4 === 2){
+             let element = document.getElementById('currentPosition3');
+             element.scrollIntoView({behavior: 'smooth',inline: 'center'});
+           }else{
+             let element = document.getElementById('currentPosition4');
+             element.scrollIntoView({behavior: 'smooth',inline: 'center'});
+           }
+           break;
+         }
+       });
+
+     });
+     </script>
+
     <div class="container">
       <div class="header">
         <h1>すごろくゲーム</h1>
       </div>
-      <div class="choice">
+      <div class="choice select1">
+        <p id="beginning" class="btn">はじめから</p>
+        <p id="continued" class="btn">続きから</p>
+      </div>
+      <div class="choice select2 none">
        <p>プレイ人数を選んでください</p>
        <div id="selectPeople">
          <p id="one" class="btn">1人</p>
@@ -145,23 +338,33 @@
         <div class="event-contents">
           <p id="eventInfo"></p>
         </div>
+        <div class="confirm-wrapper">
+          <form action="update.php" method="post">
+            <div class="current-squares none">
+              <span>プレイヤー数</span>
+              <input id="playerNumber" type="text" name="pn" value="0">
+              <span>次のプレイヤー</span>
+              <input id="nextPlayer" type="text" name="nextpn" value="1">
+              <span>totalcount</span>
+              <input id="totalCount" type="text" name="totalCount" value="0">
+              <span>プレイヤー1</span>
+              <input id="position1" type="text" name="player1" value="0">
+              <input id="countNumber1" type="text" name="countNumber1" value="0">
+              <span>プレイヤー2</span>
+              <input id="position2" type="text" name="player2" value="0">
+              <input id="countNumber2" type="text" name="countNumber2" value="0">
+              <span>プレイヤー3</span>
+              <input id="position3" type="text" name="player3" value="0">
+              <input id="countNumber3" type="text" name="countNumber3" value="0">
+              <span>プレイヤー4</span>
+              <input id="position4" type="text" name="player4" value="0">
+              <input id="countNumber4" type="text" name="countNumber4" value="0">
+            </div>
+            <input type="submit" value="保存する" class="btn">
+          </form>
+        </div>
       </div>
-      <div class="confirm-wrapper">
-        <form action="confirm1.php" method="post">
-          <div class="current-squares">
-            <h3>フォームデータの送信（あとで不可視化）</h3>
-            <span>プレイヤー1</span>
-            <input type="text" name="player1" value="0">
-            <span>プレイヤー2</span>
-            <input type="text" name="player2" value="0">
-            <span>プレイヤー3</span>
-            <input type="text" name="player3" value="0">
-            <span>プレイヤー4</span>
-            <input type="text" name="player4" value="0">
-            <input type="submit" value="送信">
-          </div>
-        </form>
-      </div>
+
     </div>
     <script src="main.js"></script>
     <script src="game.js"></script>
