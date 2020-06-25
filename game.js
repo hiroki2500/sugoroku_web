@@ -2,32 +2,13 @@ $(function(){
 
 //変数
 //player1
-let countNum1 = 0; //振った回数
 let diceNum1; //出目
-let diceSum1 = 0; //出目の合計
-let diceSumId1 = ("square" + diceSum1) //出目の合計値=コマの位置
-let leftVal1 = 100; //残りのマス
-
 //player2
-let countNum2 = 0; //振った回数
 let diceNum2; //出目
-let diceSum2 = 0; //出目の合計
-let diceSumId2 = ("square" + diceSum2) //出目の合計値=コマの位置
-let leftVal2 = 100; //残りのマス
-
 //player3
-let countNum3 = 0; //振った回数
 let diceNum3; //出目
-let diceSum3 = 0; //出目の合計
-let diceSumId3 = ("square" + diceSum3) //出目の合計値=コマの位置
-let leftVal3 = 100; //残りのマス
-
 //player4
-let countNum4 = 0; //振った回数
 let diceNum4; //出目
-let diceSum4 = 0; //出目の合計
-let diceSumId4 = ("square" + diceSum4) //出目の合計値=コマの位置
-let leftVal4 = 100; //残りのマス
 
 let totalCountNum = 0; //ボタンを押した総回数
 let diceMax = 6; //サイコロの目の最大値
@@ -66,6 +47,7 @@ function forwardMotion1(){
     countNum1 ++;
     $(`#count`).text(`${countNum1}投目`);
     $(`#leftValue`).text(`ゴールまであと${leftVal1}マス`);
+    document.getElementById("countNumber1").value = countNum1;
 
     //コマの動作
     document.getElementById(diceSumId1).innerHTML = document.getElementById(diceSumId1).innerHTML.replace('<i id="currentPosition1" class="fas fa-car-side playerIcon1"></i>','');
@@ -102,6 +84,7 @@ function forwardMotion2(){
     countNum2 ++;
     $(`#count`).text(`${countNum2}投目`);
     $(`#leftValue`).text(`ゴールまであと${leftVal2}マス`);
+    document.getElementById("countNumber2").value = countNum2;
     //コマの動作
     document.getElementById(diceSumId2).innerHTML = document.getElementById(diceSumId2).innerHTML.replace('<i id="currentPosition2" class="fas fa-car-side playerIcon2"></i>','');
     diceSumId2 = ("square" + diceSum2);
@@ -137,6 +120,7 @@ function forwardMotion3(){
     countNum3 ++;
     $(`#count`).text(`${countNum3}投目`);
     $(`#leftValue`).text(`ゴールまであと${leftVal3}マス`);
+    document.getElementById("countNumber3").value = countNum3;
 
     //コマの動作
     document.getElementById(diceSumId3).innerHTML = document.getElementById(diceSumId3).innerHTML.replace('<i id="currentPosition3" class="fas fa-car-side playerIcon3"></i>','');
@@ -173,6 +157,7 @@ function forwardMotion4(){
     countNum4 ++;
     $(`#count`).text(`${countNum4}投目`);
     $(`#leftValue`).text(`ゴールまであと${leftVal4}マス`);
+    document.getElementById("countNumber4").value = countNum4;
 
     //コマの動作
     document.getElementById(diceSumId4).innerHTML = document.getElementById(diceSumId4).innerHTML.replace('<i id="currentPosition4" class="fas fa-car-side playerIcon4"></i>','');
@@ -496,6 +481,7 @@ function deleteInfo(){
 //サイコロを投げた時の処理
 $(`#rollDice`).click(function(){
   totalCountNum ++;
+  document.getElementById("totalCount").value = totalCountNum;
   switch(player){
     case 1:
     diceDisplay1();
@@ -509,11 +495,13 @@ $(`#rollDice`).click(function(){
       forwardMotion1();
       eventOccurrence1();
       setTimeout(turnPlayer2, 2000);
+      document.getElementById("nextPlayer").value = 2;
     }else{
       diceDisplay2();
       forwardMotion2();
       eventOccurrence2();
       setTimeout(turnPlayer21, 2000);
+      document.getElementById("nextPlayer").value = 1;
     }
     break;
 
@@ -523,16 +511,19 @@ $(`#rollDice`).click(function(){
       forwardMotion1();
       eventOccurrence1();
       setTimeout(turnPlayer2, 2000);
+      document.getElementById("nextPlayer").value = 2;
     }else if(totalCountNum % 3 === 2){
       diceDisplay2();
       forwardMotion2();
       eventOccurrence2();
       setTimeout(turnPlayer3, 2000);
+      document.getElementById("nextPlayer").value = 3;
     }else{
       diceDisplay3();
       forwardMotion3();
       eventOccurrence3();
       setTimeout(turnPlayer31, 2000);
+      document.getElementById("nextPlayer").value = 1;
     }
     break;
 
@@ -542,25 +533,26 @@ $(`#rollDice`).click(function(){
       forwardMotion1();
       eventOccurrence1();
       setTimeout(turnPlayer2, 2000);
+      document.getElementById("nextPlayer").value = 2;
     }else if(totalCountNum % 4 === 2){
       diceDisplay2();
       forwardMotion2();
       eventOccurrence2();
       setTimeout(turnPlayer3, 2000);
+      document.getElementById("nextPlayer").value = 3;
     }else if(totalCountNum % 4 === 3){
       diceDisplay3();
       forwardMotion3();
       eventOccurrence3();
       setTimeout(turnPlayer4, 2000);
+      document.getElementById("nextPlayer").value = 4;
     }else{
       diceDisplay4();
       forwardMotion4();
       eventOccurrence4();
       setTimeout(turnPlayer41, 2000);
+      document.getElementById("nextPlayer").value = 1;
     }
-
-
   }
 });
-
 });
